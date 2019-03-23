@@ -67,12 +67,25 @@ nnoremap <tab> %
 vnoremap <tab> %
 
 """ SYSTEM CLIPBOARD COPY & PASTE SUPPORT
+" yank to clipboard
+if has("clipboard")
+  set clipboard=unnamed " copy to the system clipboard
+
+  if has("unnamedplus") " X11 support
+    set clipboard+=unnamedplus
+  endif
+endif
 set pastetoggle=<F2> "F2 before pasting to preserve indentation
 "Copy paste to/from clipboard
-vnoremap <C-c> "+y
-nnoremap <C-c> "+y
-map <silent><Leader>p :set paste<CR>o<esc>"*]p:set nopaste<cr>"
-map <silent><Leader><S-p> :set paste<CR>O<esc>"*]p:set nopaste<cr>"
+nmap <C-v> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+imap <C-v> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
+nmap <C-c> :.w !pbcopy<CR><CR>
+"vmap <C-c> :w !pbcopy<CR><CR>
+vnoremap <silent> <C-c> :<CR>:let @a=@" \| execute "normal! vgvy" \| let res=system("pbcopy", @") \| let @"=@a<CR>
+"vnoremap <C-c> "+y
+"nnoremap <C-c> "+y
+"map <silent><Leader>p :set paste<CR>o<esc>"*]p:set nopaste<cr>"
+"map <silent><Leader><S-p> :set paste<CR>O<esc>"*]p:set nopaste<cr>"
 
 "" change the vim cursor in Insert/normal mode?
 "" Other options (replace the number after \e[):
@@ -92,19 +105,12 @@ au!
 autocmd VimEnter * silent !echo -ne "\e[2 q"
 augroup END
 
-"set clipboard=unnamed
-"
 "" Helps force plugins to load correctly when it is turned back on below
 "filetype off
-"
-"" TODO: Load plugins here (pathogen or vundle)
-"
 "
 "" For plugins to load correctly
 "filetype plugin indent on
 "
-"" TODO: Pick a leader key
-"" let mapleader = ","
 "
 "" Security
 "set modelines=0
@@ -124,7 +130,6 @@ augroup END
 "
 "set backspace=indent,eol,start
 "set matchpairs+=<:> " use % to jump between pairs
-"runtime! macros/matchit.vim
 "
 "" Move up/down editor lines
 "nnoremap j gj
@@ -132,14 +137,6 @@ augroup END
 "
 "" Allow hidden buffers
 "set hidden
-"
-"
-"" Remap help key.
-"" inoremap <F1> <ESC>:set invfullscreen<CR>a
-"" nnoremap <F1> :set invfullscreen<CR>
-"" vnoremap <F1> :set invfullscreen<CR>
-"
-"" Textmate holdouts
 "
 "" Formatting
 "map <leader>q gqip
