@@ -67,7 +67,6 @@ nnoremap <tab> %
 vnoremap <tab> %
 
 """ SYSTEM CLIPBOARD COPY & PASTE SUPPORT
-" yank to clipboard
 if has("clipboard")
   set clipboard=unnamed " copy to the system clipboard
 
@@ -75,17 +74,7 @@ if has("clipboard")
     set clipboard+=unnamedplus
   endif
 endif
-set pastetoggle=<F2> "F2 before pasting to preserve indentation
-"Copy paste to/from clipboard
-nmap <C-v> :set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-imap <C-v> <Esc>:set paste<CR>:r !pbpaste<CR>:set nopaste<CR>
-nmap <C-c> :.w !pbcopy<CR><CR>
-"vmap <C-c> :w !pbcopy<CR><CR>
-vnoremap <silent> <C-c> :<CR>:let @a=@" \| execute "normal! vgvy" \| let res=system("pbcopy", @") \| let @"=@a<CR>
-"vnoremap <C-c> "+y
-"nnoremap <C-c> "+y
-"map <silent><Leader>p :set paste<CR>o<esc>"*]p:set nopaste<cr>"
-"map <silent><Leader><S-p> :set paste<CR>O<esc>"*]p:set nopaste<cr>"
+vnoremap <leader>c "+y
 
 "" change the vim cursor in Insert/normal mode?
 "" Other options (replace the number after \e[):
@@ -104,46 +93,3 @@ augroup myCmds
 au!
 autocmd VimEnter * silent !echo -ne "\e[2 q"
 augroup END
-
-"" Helps force plugins to load correctly when it is turned back on below
-"filetype off
-"
-"" For plugins to load correctly
-"filetype plugin indent on
-"
-"
-"" Security
-"set modelines=0
-"
-"" Encoding
-"set encoding=utf-8
-"
-"" Whitespace
-"set wrap
-"set textwidth=79
-"set formatoptions=tcqrn1
-"set tabstop=2
-"set shiftwidth=2
-"set softtabstop=2
-"set expandtab
-"set noshiftround
-"
-"set backspace=indent,eol,start
-"set matchpairs+=<:> " use % to jump between pairs
-"
-"" Move up/down editor lines
-"nnoremap j gj
-"nnoremap k gk
-"
-"" Allow hidden buffers
-"set hidden
-"
-"" Formatting
-"map <leader>q gqip
-"
-"" Visualize tabs and newlines
-"set listchars=tab:▸\ ,eol:¬
-"" Uncomment this to enable by default:
-"" set list " To enable by default
-"" Or use your leader key + l to toggle on/off
-"map <leader>l :set list!<CR> " Toggle tabs and EOL
