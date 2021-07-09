@@ -34,8 +34,8 @@ set showmode
 set autowrite     
 
 "" Insert newline without entering insert mode
-nnoremap o o<Esc>
-nnoremap O O<Esc>
+"" nnoremap o o<Esc>
+"" nnoremap O O<Esc>
 
 " Make searching better
 set ignorecase    " case insensitive searching (unless specified)
@@ -87,6 +87,10 @@ vnoremap <leader>c "+y
 ""     Ps = 6  -> steady bar (xterm).
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
+
+"" reduce the timeout so cursor can switch faster.
+set timeoutlen=1000
+set ttimeoutlen=5
 
 " optional reset cursor on start:
 augroup myCmds
